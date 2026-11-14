@@ -1,0 +1,117 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+    Transaction History
+{% endblock %}
+
+{% block main %}
+
+<style>
+    .history-card {
+        background: white;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        overflow-x: auto;
+    }
+
+    .history-title {
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .history-subtitle {
+        color: #888;
+        margin-bottom: 25px;
+    }
+
+    .history-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .history-table th {
+        background: #f8fafc;
+        padding: 15px;
+        color: #64748b;
+        text-align: left;
+    }
+
+    .history-table td {
+        padding: 16px 15px;
+        border-bottom: 1px solid #edf0f4;
+    }
+
+    .history-table tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .symbol {
+        font-weight: 700;
+    }
+
+    .buy {
+        color: #15803d;
+        background: #dcfce7;
+    }
+
+    .sell {
+        color: #b91c1c;
+        background: #fee2e2;
+    }
+
+    .trade-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+</style>
+
+<div class="history-card">
+
+    <h2 class="history-title">Transaction History</h2>
+    <p class="history-subtitle">
+        Your stock buying and selling activity
+    </p>
+
+    <table class="history-table">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Type</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td class="symbol">
+                    {{ transaction.symbol }}
+                </td>
+
+                <td>
+                    {% if transaction.shares > 0 %}
+                        <span class="trade-badge buy">BUY</span>
+                    {% else %}
+                        <span class="trade-badge sell">SELL</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ transaction.shares }}</td>
+
+                <td>{{ transaction.price | usd }}</td>
+
+                <td>{{ transaction.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}

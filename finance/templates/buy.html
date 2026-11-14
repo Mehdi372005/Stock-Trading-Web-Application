@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    BUY
+{% endblock %}
+
+{% block main %}
+
+
+    <form action="/buy" method="post">
+
+        <input type="text" name="symbol" placeholder="Symbol">
+
+        <div>
+            <button type="button" onclick="decrease()">−</button>
+
+            <input type="number" id="shares" name="shares"
+                value="1" min="1" step="1" readonly>
+
+            <button type="button" onclick="increase()">+</button>
+        </div>
+
+        <button type="submit">Buy</button>
+
+    </form>
+
+    <script>
+        function increase() {
+            let input = document.getElementById("shares");
+            input.value = Number(input.value) + 1;
+        }
+
+        function decrease() {
+            let input = document.getElementById("shares");
+
+            if (Number(input.value) > 1) {
+                input.value = Number(input.value) - 1;
+            }
+        }
+    </script>
+
+
+{% endblock %}
